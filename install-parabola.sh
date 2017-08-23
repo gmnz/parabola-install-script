@@ -100,7 +100,12 @@ elif [ "$1" == "2" ]; then
 	pacman -Syu --noconfirm 
         useradd -m -G wheel -s /bin/bash $USERNAME
 	echo "$USERNAME:$USERNAME" | chpasswd
-	pacman -S --noconfirm git sudo mutt vim syncthing python-pip make gcc dosfstools grub colordiff openssh zip unzip
+	pacman -S --noconfirm git sudo mutt vim syncthing python-pip make gcc dosfstools grub colordiff openssh zip unzip fakeroot
+        cd /tmp
+        git clone https://aur.archlinux.org/pssh.git
+        cd pssh/
+        makepkg -si --noconfirm
+        cd /
 	if echo $@ | grep uefi; then
 		pacman -S --noconfirm efibootmgr
 	fi
@@ -151,6 +156,7 @@ elif [ "$1" == "2" ]; then
           if echo $@ | grep gnome; then
                   pacman -S --noconfirm gnome-shell gnome-terminal nautilus gnome-control-center gdm
                   systemctl enable gdm
+	  fi
 	fi
 	if echo $@ | grep alsa; then
 		pacman -S --noconfirm alsa-utils mpv youtube-dl mps-youtube 
@@ -174,7 +180,7 @@ elif [ "$1" == "2" ]; then
 elif [ "$1" == "3" ]; then
         stman configure
 elif [ "$1" == "4" ]; then
-        ~/Coco/bin/prepoj.sh
+        ~/Coco/bin/setup/prepoj.sh
 elif [ "$1" == "5" ]; then
         iptables.sh
         systemctl enable iptables
