@@ -127,9 +127,10 @@ elif [ "$1" == "2" ]; then
                   make
                   make install
                   cd /
-          elif echo $@ | grep budgie; then
+          fi
+          if echo $@ | grep budgie; then
                   pacman -S --noconfirm budgie-desktop gnome-terminal nautilus gnome-control-center lightdm lightdm-gtk-greeter meson val pkg-config libpeas gobject-introspection ninja
-                  sudo systemctl enable lightdm
+                  systemctl enable lightdm
                   cd /tmp
                   git clone https://github.com/ilgarmehmetali/budgie-brightness-control-applet
                   cd budgie-brightness-control-applet/
@@ -139,13 +140,17 @@ elif [ "$1" == "2" ]; then
                   ninja
                   ninja install
                   cd /
-          elif echo $@ | grep wayland; then
+          fi
+          if echo $@ | grep wayland; then
                   pacman -S --noconfirm wayland xorg-server-xwayland lightdm lightdm-gtk-greeter
-                  sudo systemctl enable lightdm
+                  systemctl enable lightdm
           fi
           if echo $@ | grep intel; then
                   pacman -S --noconfirm xf86-video-intel
           fi
+          if echo $@ | grep gnome; then
+                  pacman -S --noconfirm gnome-shell gnome-terminal nautilus gnome-control-center gdm
+                  systemctl enable gdm
 	fi
 	if echo $@ | grep alsa; then
 		pacman -S --noconfirm alsa-utils mpv youtube-dl mps-youtube 
@@ -170,6 +175,11 @@ elif [ "$1" == "3" ]; then
         stman configure
 elif [ "$1" == "4" ]; then
         ~/Coco/bin/prepoj.sh
-        sudo iptables.sh
-        sudo systemctl enable iptables
+elif [ "$1" == "5" ]; then
+        iptables.sh
+        systemctl enable iptables
+        cp ~/Coco/slash/usr/local/bin/kernecust.sh /usr/local/bin/
+        cp ~/Coco/slash/etc/systemd/system/firecust.service /etc/systemd/system/
+        systemctl start firecust
+        systemctl enable firecust
 fi
