@@ -100,7 +100,7 @@ elif [ "$1" == "2" ]; then
 	pacman -Syu --noconfirm 
         useradd -m -G wheel -s /bin/bash $USERNAME
 	echo "$USERNAME:$USERNAME" | chpasswd
-	pacman -S --noconfirm git sudo mutt vim syncthing python-pip make gcc dosfstools grub colordiff openssh zip unzip fakeroot
+	pacman -S --noconfirm git sudo mutt vim syncthing python-pip make gcc dosfstools grub colordiff openssh zip unzip fakeroot dvtm
         cd /tmp
         git clone https://aur.archlinux.org/pssh.git
         cd pssh/
